@@ -1,7 +1,18 @@
-// Import required modules 
+const {GraphQLServer } = require('graphql-yoga');
+const resolvers = {
+    Query: {
+        info: () => {
+            return {
+                url: "http://localhost",
+                description: "Sample"
+            };
+        }
+    }
+};
 
-const { GraphQLServer } = require('graphql-yoga');
+const server = new GraphQLServer({
+    typeDefs: './src/schema.graphql',
+    resolvers,
+})
 
-// Prisma-bindings will help you access the database using JS functions
-const { Prisma  } = require('prisma-binding'); 
-
+server.start(() => console.log("Server is running on port 4000"));
