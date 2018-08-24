@@ -1,7 +1,7 @@
 # Endpoint 
 
 #endpoint: ''
-endpoint: https://us1.prisma.sh/ngugi-ndungu-ca026f/graphql-step-by-step-prismadb/practice
+endpoint: 'https://us1.prisma.sh/ngugi-ndungu-ca026f/graphql-step-by-step-prismadb/practice'
 
 #Data  Model
 
@@ -10,3 +10,9 @@ datamodel: 'datamodel.graphql'
 # Secret
 
 secret: 'graphql-step-by-step'
+
+# Deploy hook
+hooks:
+  post-deploy:
+    - graphql get-schema --project database
+

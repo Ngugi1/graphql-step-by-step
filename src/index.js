@@ -9,7 +9,7 @@ const resolvers = {
     },
 
     Mutation: {
-        post: (root, args, context, info) => {
+        post:  (root, args, context, info) => {
             return context.db.mutation.createLink({
                 data: {
                     url: args.url,
@@ -22,13 +22,16 @@ const resolvers = {
 
 const server = new GraphQLServer({
     typeDefs: './src/schema.graphql',
-    resolvers: resolvers,
-    context: new Prisma({
-        typeDefs: 'src/generated/prisma.graphql',
-        endpoint: 'https://us1.prisma.sh/ngugi-ndungu-ca026f/graphql-step-by-step-prismadb/practice',
-        secret: 'graphql-step-by-step',
-        debug: true
-    })
+    resolvers,
+    context: req => ({
+        ...req,
+        db: new Prisma({
+          typeDefs: 'src/generated/prisma.graphql',
+          endpoint: 'https://us1.prisma.sh/ngugi-ndungu-ca026f/graphql-step-by-step-prismadb/practice',
+          secret: 'graphql-step-by-step',
+          debug: true,
+        }),
+      }),
 });
 
 server.start(function () {console.log("Server is running on port 4000");});
